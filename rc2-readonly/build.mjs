@@ -8,13 +8,13 @@ const output = resolve(root, 'dist')
 await mkdir(output, { recursive: true })
 const model = await readFile(resolve(root, 'model.mjs'), 'utf8')
 const client = await readFile(resolve(root, 'client.mjs'), 'utf8')
-const source = model.replace(/^export /gm, '') + '\n' + client.replace(/^import .*\n/, '').replace(/^export /gm, '')
+const source = model.replace(/^export /gm, '') + '\n' + client.replace(/^import [^\r\n]*\r?\n/, '').replace(/^export /gm, '')
 const bundle = `window.__ModuleLoader__.load({id:"dsh-flowglass",factory:require=>{\n${source}\nreturn makePlugin(require("react"));\n}});\n`
 await writeFile(resolve(output, 'client.js'), bundle)
 await writeFile(resolve(output, 'index.js'), 'export const name = "dsh-flowglass";\nexport function apply() {}\n')
 await writeFile(resolve(output, 'cordis.patch.yml'), '- insert:\n    - id: flowglass-readonly\n      name: dsh-flowglass\n')
 await writeFile(resolve(output, 'package.json'), JSON.stringify({
-  name: 'dsh-flowglass', version: '0.7.4-arist.rc2.1', type: 'module', license: 'MIT',
+  name: 'dsh-flowglass', version: '0.7.4-arist.rc2.2', type: 'module', license: 'MIT',
   repository: { type: 'git', url: 'https://github.com/Iwctwbh/dsh-flowglass.git' },
   description: 'Read-only rc.2 execution window inside the existing Sidebar Tasks page',
   main: './index.js', exports: { '.': './index.js', './client': './client.js', './package.json': './package.json' },

@@ -6,7 +6,25 @@ export function makePlugin(React) {
   const labels = { unknown: '状态未知 / 同步中', unloaded: '未加载', inactive: '当前未运行', running: '运行中', streaming: '生成中', completed: '已完成',
     failed: '失败', cancelled: '已取消', interrupted: '中断', blocked: '受阻', 'max-tokens': '达到输出上限', recorded: '已记录', stopping: '停止中', killed: '已终止', unavailable: '不可用', corrupt: '数据损坏', unsupported: '不支持' }
   const text = state => Object.hasOwn(labels, state) ? labels[state] : String(state)
-  const CSS = `.flowglass-rc2{height:100%;overflow:auto;color:inherit;padding:12px;box-sizing:border-box;font:inherit;overflow-wrap:anywhere}.flowglass-rc2 button,.flowglass-rc2 select{font:inherit;color:inherit;background:transparent;border:1px solid currentColor;border-radius:6px;padding:4px 8px;max-width:100%}.flowglass-rc2 header{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.flowglass-rc2 ol{list-style:none;padding:0;margin:10px 0}.flowglass-rc2 li{border-left:2px solid var(--color-border,#8886);padding:8px 10px;margin-left:4px}.flowglass-rc2 small{opacity:.75}.flowglass-rc2 [data-state=failed]{border-color:#d75c59}.flowglass-rc2 pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.flowglass-rc2 summary{cursor:pointer}.flowglass-rc2 section{margin-top:16px}.flowglass-rc2 h3{font-size:inherit;margin:6px 0}`
+  const CSS = `
+.flowglass-rc2{height:100%;overflow:auto;padding:12px;box-sizing:border-box;overflow-wrap:anywhere;font:var(--dsw-font-s-14,normal 400 14px/1.5 system-ui,sans-serif);color:var(--dsw-alias-label-primary,inherit)}
+.flowglass-rc2 button,.flowglass-rc2 select{font:inherit;color:inherit;background:transparent;border:1px solid var(--dsw-alias-border-l2,#8886);border-radius:6px;padding:4px 8px;max-width:100%}
+.flowglass-rc2 button:not(:disabled):hover,.flowglass-rc2 select:hover{background:var(--dsw-alias-interactive-bg-hover,#8881)}
+.flowglass-rc2 button:disabled{opacity:.5;cursor:default}
+.flowglass-rc2 :is(button,select,summary):focus-visible{outline:2px solid var(--dsw-alias-label-link,#5188e8);outline-offset:2px}
+.flowglass-rc2 header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.flowglass-rc2 header strong{font-weight:600}
+.flowglass-rc2 header [role=status]{font-size:12px;border-radius:4px;padding:2px 6px;background:var(--dsw-alias-interactive-bg-hover,#8881)}
+.flowglass-rc2 p{margin:8px 0}
+.flowglass-rc2 ol{list-style:none;padding:0;margin:10px 0}
+.flowglass-rc2 li{border-left:2px solid var(--dsw-alias-border-l2,#8886);padding:8px 10px;margin-left:4px}
+.flowglass-rc2 small{font-size:12px;color:var(--dsw-alias-label-secondary,inherit)}
+.flowglass-rc2 [data-state=failed]{border-color:#d75c59}
+.flowglass-rc2 pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--dsw-alias-interactive-bg-hover,#8881);border-radius:6px;padding:8px}
+.flowglass-rc2 summary{cursor:pointer;color:var(--dsw-alias-label-secondary,inherit)}
+.flowglass-rc2 section{margin-top:16px}
+.flowglass-rc2 h3{font-size:inherit;font-weight:600;margin:6px 0}
+`
   function TimelineView({ ctx, scope, visible, onSubagentJump }) {
     const initial = () => captureTimeline({ sessionId: scope.sessionId, snapshot: undefined, list: ctx.sessions.list.getSnapshot(), connected: false })
     const [model, setModel] = useState(initial)

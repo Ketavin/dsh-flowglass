@@ -4,6 +4,8 @@ This isolated adaptation is based on upstream v0.7.4 commit `98ebd6fcf4ebc41d59b
 
 The plugin adds “执行过程” inside the existing Sidebar Tasks page. It requires Sidebar's `taskViews` capability. Original Tasks remains the default; uninstalling the plugin restores it. No rail entry is added. The Host half registers no RPC, tool, timer, or persistence service.
 
+The view binds its typography, text and borders to the existing DSH theme tokens. It does not assume the embedding container supplies a font or a foreground color; the standalone renderer has system-font fallbacks. Final theme acceptance is performed inside the installed Sidebar in light and dark modes.
+
 Data comes from `SessionFace.getSnapshot/subscribe`, `sessions.list`, and `connection.hostDescription`. The existing runtime resolves legacy assistant chunks and final messages. This adapter copies a bounded tail, shows tool results by callId and direct-parent catalog addresses, and preserves actual Job states. Inactive is not success; disconnect/reconnect displays unknown until a new baseline. Parameters and bodies are collapsed and truncated; rendering uses React text nodes, never HTML from logs.
 
 ## Scope
