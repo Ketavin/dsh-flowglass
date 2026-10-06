@@ -18,3 +18,6 @@ dist/
 
 # 本机项目记忆指针，不进入公开仓库
 .memory-project.json
+
+# Local acceptance screenshots and receipts; retained outside source commits.
+rc2-readonly/browser-evidence-*/
